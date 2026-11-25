@@ -703,59 +703,87 @@
         <div class="lg:col-span-7">
           <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 lg:p-10 shadow-soft">
             
-            <form id="inquiry-form" class="space-y-5">
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label for="full-name" class="block text-sm font-semibold text-slateBrand mb-1.5">
-                    Full Name <span class="text-clinicalCyan">*</span>
-                  </label>
-                  <input id="full-name" name="fullName" type="text" required placeholder="Dr. Jane Smith" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm text-graphiteInk focus:outline-none focus:border-clinicalCyan focus:ring-2 focus:ring-clinicalCyan/20" />
-                </div>
-                <div>
-                  <label for="work-email" class="block text-sm font-semibold text-slateBrand mb-1.5">
-                    Work or Institutional Email <span class="text-clinicalCyan">*</span>
-                  </label>
-                  <input id="work-email" name="workEmail" type="email" required placeholder="jsmith@academicmed.org" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm text-graphiteInk focus:outline-none focus:border-clinicalCyan focus:ring-2 focus:ring-clinicalCyan/20" />
-                </div>
-              </div>
+<form id="contactForm" action="https://formsubmit.co/ajax/info@engimedix.com" method="POST" class="space-y-4">
+  <!-- FormSubmit configuration -->
+  <input type="hidden" name="_subject" value="New EngiMedix Inquiry">
+  <input type="hidden" name="_template" value="table">
+  <input type="text" name="_honey" style="display:none">
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label for="organization" class="block text-sm font-semibold text-slateBrand mb-1.5">
-                    Health System / Organization <span class="text-clinicalCyan">*</span>
-                  </label>
-                  <input id="organization" name="organization" type="text" required placeholder="University Medical Center" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm text-graphiteInk focus:outline-none focus:border-clinicalCyan focus:ring-2 focus:ring-clinicalCyan/20" />
-                </div>
-                <div>
-                  <label for="role-select" class="block text-sm font-semibold text-slateBrand mb-1.5">
-                    Your Role <span class="text-clinicalCyan">*</span>
-                  </label>
-                  <select id="role-select" name="role" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm text-graphiteInk bg-white focus:outline-none focus:border-clinicalCyan focus:ring-2 focus:ring-clinicalCyan/20">
-                    <option value="Radiology Department Chair / Clinical Leader">Radiology Department Chair / Clinical Leader</option>
-                    <option value="Hospital IT / Clinical Informatics">Hospital IT / Clinical Informatics</option>
-                    <option value="Investor / Strategic Partner">Investor / Strategic Partner</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-              </div>
+  <div>
+    <label for="name" class="block text-sm font-medium text-slate-300 mb-1">Full Name</label>
+    <input type="text" id="name" name="name" required placeholder="Dr. Jane Smith"
+      class="w-full px-4 py-2.5 rounded-lg bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400">
+  </div>
 
-              <div>
-                <label for="message" class="block text-sm font-semibold text-slateBrand mb-1.5">
-                  How can we help?
-                </label>
-                <textarea id="message" name="message" rows="4" placeholder="Tell us about your department's protocoling or clinical workflow priorities, or share details on your investment focus..." class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm text-graphiteInk focus:outline-none focus:border-clinicalCyan focus:ring-2 focus:ring-clinicalCyan/20"></textarea>
-              </div>
+  <div>
+    <label for="email" class="block text-sm font-medium text-slate-300 mb-1">Work Email</label>
+    <input type="email" id="email" name="email" required placeholder="jsmith@hospital.org"
+      class="w-full px-4 py-2.5 rounded-lg bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400">
+  </div>
 
-              <div class="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <p class="text-xs text-slate-500">
-                  Do not submit Protected Health Information (PHI) through this form.
-                </p>
-                <button type="submit" class="inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-sm font-semibold text-white bg-slateBrand hover:bg-slate-800 shadow-sm transition-smooth shrink-0">
-                  Send Inquiry
-                </button>
-              </div>
-            </form>
+  <div>
+    <label for="role" class="block text-sm font-medium text-slate-300 mb-1">Role / Organization</label>
+    <input type="text" id="role" name="organization" required placeholder="Chair of Radiology, Academic Medical Center"
+      class="w-full px-4 py-2.5 rounded-lg bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400">
+  </div>
 
+  <div>
+    <label for="interest" class="block text-sm font-medium text-slate-300 mb-1">Inquiry Type</label>
+    <select id="interest" name="inquiry_type"
+      class="w-full px-4 py-2.5 rounded-lg bg-slate-900/80 border border-slate-700 text-white focus:outline-none focus:border-cyan-400">
+      <option value="Clinical Pilot / Demo">Clinical Pilot / Department Demo</option>
+      <option value="Investor Inquiry">Investor Inquiry</option>
+      <option value="Partnership / Integration">Partnership / Integration</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="message" class="block text-sm font-medium text-slate-300 mb-1">Message</label>
+    <textarea id="message" name="message" rows="4" required placeholder="Tell us about your department or inquiry..."
+      class="w-full px-4 py-2.5 rounded-lg bg-slate-900/80 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400"></textarea>
+  </div>
+
+  <button type="submit" id="submitBtn"
+    class="w-full py-3 px-6 rounded-lg font-semibold text-slate-950 bg-cyan-400 hover:bg-cyan-300 transition">
+    Send Message
+  </button>
+
+  <p id="formStatus" class="hidden text-sm text-center pt-2"></p>
+</form>
+
+<script>
+  document.getElementById('contactForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const form = e.target;
+    const btn = document.getElementById('submitBtn');
+    const status = document.getElementById('formStatus');
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+
+      if (response.ok) {
+        status.textContent = 'Thank you — your message has been sent to the EngiMedix team.';
+        status.className = 'text-sm text-center pt-2 text-emerald-400';
+        form.reset();
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (err) {
+      status.textContent = 'Unable to send right now. Please email info@engimedix.com directly.';
+      status.className = 'text-sm text-center pt-2 text-rose-400';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Send Message';
+    }
+  });
+</script>
             <!-- Instant Visual Confirmation Box (Hidden until submit) -->
             <div id="form-confirmation" class="hidden py-8 text-center space-y-4">
               <div class="w-14 h-14 rounded-full bg-emerald-100 text-pulseEmerald flex items-center justify-center mx-auto">
