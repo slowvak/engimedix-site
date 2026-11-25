@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EngiMedix — Engineered Clinical Intelligence for Diagnostic Medicine</title>
+  <meta name="description" content="EngiMedix builds task-conditioned clinical intelligence and site-calibrated decision models that reduce non-interpretive cognitive load in radiology and diagnostic medicine." />
+
+  <!-- Google Fonts: Plus Jakarta Sans, Inter, and JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            slateBrand: '#132238',
+            clinicalCyan: '#0284C7',
+            pulseEmerald: '#10B981',
+            graphiteInk: '#0F172A',
+            sterileMist: '#F1F5F9',
+          },
+          fontFamily: {
+            heading: ['"Plus Jakarta Sans"', 'sans-serif'],
+            sans: ['"Inter"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          boxShadow: {
+            soft: '0 10px 30px -10px rgba(19, 34, 56, 0.08)',
+            card: '0 4px 20px -2px rgba(15, 23, 42, 0.05)',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Subtle grid pattern for medical precision aesthetic */
+    .bg-clinical-grid {
+      background-image: radial-gradient(rgba(19, 34, 56, 0.07) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .transition-smooth {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="bg-white text-graphiteInk font-sans antialiased selection:bg-clinicalCyan/15 selection:text-slateBrand">
+
+  <!-- =====================================================================
+       1. STICKY NAVIGATION BAR
+       ===================================================================== -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Custom SVG Brand Mark + Wordmark -->
+        <a href="#" class="flex items-center gap-3 group focus:outline-none" aria-label="EngiMedix Home">
+          <!-- Rotated geometric E (#132238) + Emerald diamond (#10B981) + M (#0284C7) -->
+          <svg class="w-11 h-9 shrink-0 transition-transform duration-300 group-hover:scale-105" viewBox="0 0 112 84" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="EngiMedix Geometric EM Emblem">
+            <!-- Left Rotated-M / Sigma-E Shape in Titanium Slate (#132238) -->
+            <path d="M8 14L28 4L48 16L39 27L28 20L19 25L35 42L19 59L28 64L39 57L48 68L28 80L8 70V54L22 42L8 30V14Z" fill="#132238"/>
+            <path d="M8 14L28 20L19 25L8 30V14Z" fill="#1E3554"/>
+            <path d="M8 70L28 64L19 59L8 54V70Z" fill="#1E3554"/>
+
+            <!-- Right M Shape in Clinical Cyan (#0284C7) -->
+            <path d="M56 14L69 4L81 26L93 4L106 14V70L93 80V34L81 55L69 34V80L56 70V14Z" fill="#0284C7"/>
+            <path d="M93 4L106 14V70L93 80V4Z" fill="#0369A1" fill-opacity="0.35"/>
+
+            <!-- Center Connecting Diamond / Node in Pulse Emerald (#10B981) -->
+            <path d="M51 33L60 42L51 51L42 42L51 33Z" fill="#10B981"/>
+          </svg>
+
+          <span class="font-heading text-2xl font-extrabold tracking-tight">
+            <span class="text-slateBrand">Engi</span><span class="text-clinicalCyan">Medix</span>
+          </span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+          <a href="#solutions" class="hover:text-slateBrand transition-colors">Solutions</a>
+          <a href="#workflow" class="hover:text-slateBrand transition-colors">Clinical Workflow</a>
+          <a href="#impact" class="hover:text-slateBrand transition-colors">Clinical Impact</a>
+          <a href="#trust" class="hover:text-slateBrand transition-colors">Enterprise Trust</a>
+          <a href="#leadership" class="hover:text-slateBrand transition-colors">Leadership</a>
+        </nav>
+
+        <!-- Primary CTA + Mobile Menu Button -->
+        <div class="flex items-center gap-3">
+          <a href="#contact" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-slateBrand hover:bg-slate-800 shadow-sm transition-smooth">
+            Request Pilot / Connect
+          </a>
+          <button id="mobile-menu-btn" type="button" class="md:hidden p-2.5 rounded-xl text-slate-600 hover:text-slateBrand hover:bg-sterileMist focus:outline-none" aria-label="Toggle Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-2">
+      <a href="#solutions" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-sterileMist">Solutions</a>
+      <a href="#workflow" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-sterileMist">Clinical Workflow</a>
+      <a href="#impact" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-sterileMist">Clinical Impact</a>
+      <a href="#trust" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-sterileMist">Enterprise Trust</a>
+      <a href="#leadership" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 hover:bg-sterileMist">Leadership</a>
+      <div class="pt-2">
+        <a href="#contact" class="block w-full text-center px-5 py-3 rounded-xl text-sm font-semibold text-white bg-slateBrand hover:bg-slate-800">
+          Request Pilot / Connect
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       2. HERO SECTION + LIVE CLINICAL COCKPIT PREVIEW CARD
+       ===================================================================== -->
+  <section class="relative overflow-hidden bg-gradient-to-b from-sterileMist/70 via-white to-white bg-clinical-grid pt-12 pb-20 lg:pt-20 lg:pb-28 border-b border-slate-200/70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+        
+        <!-- Left Column: Positioning & Dual CTAs -->
+        <div class="lg:col-span-6 space-y-7">
+          <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-xs">
+            <span class="w-2 h-2 rounded-full bg-pulseEmerald"></span>
+            <span class="font-mono text-xs font-medium uppercase tracking-wider text-slateBrand">
+              Clinician-Founded Diagnostic AI
+            </span>
+          </div>
+
+          <h1 class="font-heading text-4xl sm:text-5xl lg:text-[3.35rem] font-extrabold text-slateBrand tracking-tight leading-[1.12]">
+            Engineered Clinical Intelligence for <span class="text-clinicalCyan">Diagnostic Medicine</span>
+          </h1>
+
+          <p class="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl">
+            Reducing non-interpretive radiologist cognitive load through subspecialty-conditioned clinical summaries and site-calibrated decision models embedded directly into your existing reading and protocoling workflow.
+          </p>
+
+          <!-- Dual CTAs -->
+          <div class="flex flex-col sm:flex-row gap-4 pt-1">
+            <a href="#contact" data-role-select="Radiology Department Chair / Clinical Leader" class="role-cta inline-flex items-center justify-center px-6 py-3.5 rounded-xl text-base font-semibold text-white bg-slateBrand hover:bg-slate-800 shadow-soft transition-smooth">
+              Request a Clinical Pilot
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+            <a href="#contact" data-role-select="Investor / Strategic Partner" class="role-cta inline-flex items-center justify-center px-6 py-3.5 rounded-xl text-base font-semibold text-slateBrand bg-white border border-slate-300 hover:border-clinicalCyan hover:text-clinicalCyan shadow-xs transition-smooth">
+              Investor &amp; Partner Inquiries
+            </a>
+          </div>
+
+          <!-- Subtle Trust Sub-bar -->
+          <div class="pt-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono text-slate-500">
+            <span class="flex items-center gap-1.5">
+              <span class="text-pulseEmerald font-bold">✓</span> HL7 / FHIR Native
+            </span>
+            <span class="flex items-center gap-1.5">
+              <span class="text-pulseEmerald font-bold">✓</span> Site-Calibrated Protocols
+            </span>
+            <span class="flex items-center gap-1.5">
+              <span class="text-pulseEmerald font-bold">✓</span> Zero PHI in Model Weights
+            </span>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Mock Clinical Cockpit Preview Card -->
+        <div class="lg:col-span-6">
+          <div class="bg-white rounded-2xl border border-slate-200/90 shadow-soft overflow-hidden">
+            
+            <!-- Cockpit Top Window Bar -->
+            <div class="bg-slateBrand px-5 py-3.5 flex items-center justify-between text-white">
+              <div class="flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-pulseEmerald"></span>
+                <span class="font-mono text-xs font-semibold tracking-wide uppercase text-slate-200">
+                  EngiMedix Cockpit Overlay • RIS/PACS Sync
+                </span>
+              </div>
+              <span class="font-mono text-[11px] px-2.5 py-0.5 rounded bg-white/10 text-sky-300">
+                ACC #89421-NR
+              </span>
+            </div>
+
+            <!-- Order Metadata Header -->
+            <div class="px-5 py-4 bg-sterileMist/70 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <p class="font-mono text-[11px] uppercase tracking-wider text-slate-500">Ordered Study &amp; Subspecialty</p>
+                <p class="font-heading text-base font-bold text-slateBrand">MRI Brain W/WO Contrast • Neuroradiology</p>
+              </div>
+              <div class="text-right">
+                <p class="font-mono text-[11px] uppercase tracking-wider text-slate-500">Clinical Question</p>
+                <p class="text-xs font-semibold text-clinicalCyan">Oncology Staging — R/O CNS Metastases</p>
+              </div>
+            </div>
+
+            <!-- Card Body: Task-Conditioned Summary + Calibrated Protocol Output -->
+            <div class="p-5 sm:p-6 space-y-5">
+              
+              <!-- Subspecialty-Conditioned Clinical Brief -->
+              <div class="rounded-xl bg-sky-50/70 border border-sky-200/80 p-4 space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <span class="font-mono text-[11px] font-semibold uppercase tracking-wider text-clinicalCyan">
+                    Task-Conditioned Clinical Synthesis
+                  </span>
+                  <span class="font-mono text-[11px] text-slate-500">Filtered from 42 EHR notes</span>
+                </div>
+                <ul class="space-y-2 text-sm text-slate-700">
+                  <li class="flex items-start gap-2.5">
+                    <span class="mt-1 w-1.5 h-1.5 rounded-full bg-clinicalCyan shrink-0"></span>
+                    <span><strong class="text-slateBrand">Primary Malignancy:</strong> Newly diagnosed Stage IIIB NSCLC (adenocarcinoma), diagnosed 11 days ago.</span>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="mt-1 w-1.5 h-1.5 rounded-full bg-clinicalCyan shrink-0"></span>
+                    <span><strong class="text-slateBrand">Known Metastatic Burden:</strong> PET-CT confirms mediastinal nodal &amp; left adrenal involvement; no prior CNS imaging.</span>
+                  </li>
+                  <li class="flex items-start gap-2.5">
+                    <span class="mt-1 w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
+                    <span><strong class="text-slateBrand">Therapy &amp; Contrast Modifiers:</strong> Started <span class="font-mono text-xs bg-amber-100 text-amber-900 px-1.5 py-0.5 rounded font-medium">Dexamethasone 4mg BID</span> 48h ago (may attenuate BBB enhancement). eGFR 78 mL/min.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Calibrated Top-3 Protocol Recommendations -->
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-500">
+                    Site-Calibrated Protocol Options (Top 3)
+                  </span>
+                  <span class="font-mono text-[11px] text-pulseEmerald font-medium">
+                    Institutional Rule: Lung Staging
+                  </span>
+                </div>
+
+                <!-- Option 1 -->
+                <div class="p-3.5 rounded-xl border-2 border-pulseEmerald/60 bg-emerald-50/40 space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pulseEmerald text-white font-mono text-xs font-bold">1</span>
+                      <span class="font-semibold text-sm text-slateBrand">MRI Brain Tumor/Mets Protocol (Thin-Slice 3D T1+C)</span>
+                    </div>
+                    <span class="font-mono text-sm font-bold text-pulseEmerald">89%</span>
+                  </div>
+                  <div class="w-full bg-slate-200/80 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-pulseEmerald h-full rounded-full" style="width: 89%"></div>
+                  </div>
+                </div>
+
+                <!-- Option 2 -->
+                <div class="p-3 rounded-xl border border-slate-200 bg-white space-y-1.5">
+                  <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-200 text-slateBrand font-mono text-xs font-bold">2</span>
+                      <span class="font-medium text-sm text-slate-700">MRI Brain + Cervical/Thoracic Spine W/WO Contrast</span>
+                    </div>
+                    <span class="font-mono text-xs font-semibold text-clinicalCyan">8%</span>
+                  </div>
+                  <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-clinicalCyan h-full rounded-full" style="width: 8%"></div>
+                  </div>
+                </div>
+
+                <!-- Option 3 -->
+                <div class="p-3 rounded-xl border border-slate-200 bg-white space-y-1.5">
+                  <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-200 text-slateBrand font-mono text-xs font-bold">3</span>
+                      <span class="font-medium text-sm text-slate-700">Standard Routine MRI Brain W/WO Contrast</span>
+                    </div>
+                    <span class="font-mono text-xs font-semibold text-slate-500">3%</span>
+                  </div>
+                  <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-slate-400 h-full rounded-full" style="width: 3%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Footer Evidence Strip -->
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                <span>Clinician review &amp; single-click confirmation preserved</span>
+                <span class="font-mono text-slateBrand font-medium">Latency: &lt;180ms</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       3. CORE CAPABILITIES (3-COLUMN GRID)
+       ===================================================================== -->
+  <section id="solutions" class="py-20 lg:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="max-w-3xl mb-14">
+        <p class="font-mono text-xs font-semibold uppercase tracking-widest text-clinicalCyan mb-3">
+          Core Capabilities
+        </p>
+        <h2 class="font-heading text-3xl sm:text-4xl font-bold text-slateBrand tracking-tight">
+          Built for the Reality of Academic and High-Volume Diagnostic Workflows
+        </h2>
+        <p class="mt-4 text-lg text-slate-600 leading-relaxed">
+          Generic EHR summaries bury critical diagnostic modifiers, and rigid national guidelines fail to reflect institutional scanner fleets and subspecialty preferences. EngiMedix bridges both gaps.
+        </p>
+      </div>
+
+      <!-- 3-Column Feature Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Card 1 -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-card hover:border-clinicalCyan/50 transition-smooth flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-sky-50 border border-sky-100 text-clinicalCyan flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <h3 class="font-heading text-xl font-bold text-slateBrand mb-3">
+              Task-Conditioned Clinical Synthesis
+            </h3>
+            <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+              Replaces generic, one-size-fits-all patient summaries with targeted clinical extraction tailored to the exact study ordered, the interpreting subspecialty, and the underlying diagnostic question.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 font-mono text-xs text-slate-500">
+            Surfaces staging, meds, labs &amp; prior surgical context
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-card hover:border-clinicalCyan/50 transition-smooth flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 text-pulseEmerald flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <h3 class="font-heading text-xl font-bold text-slateBrand mb-3">
+              Site-Calibrated Decision Models
+            </h3>
+            <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+              Compact, single-pass decision models calibrated to your department’s institutional protocols and contrast rules—presenting ranked top-3 options alongside transparent clinical evidence.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 font-mono text-xs text-slate-500">
+            Bounded probabilities • Zero free-text hallucination
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-card hover:border-clinicalCyan/50 transition-smooth flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 text-slateBrand flex items-center justify-center mb-6">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="font-heading text-xl font-bold text-slateBrand mb-3">
+              Zero-Friction Cockpit Integration
+            </h3>
+            <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+              Delivers synthesized patient context and calibrated protocol guidance directly inside existing RIS/PACS worklists and protocoling queues via standard HL7 and FHIR interfaces.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 font-mono text-xs text-slate-500">
+            No separate browser tabs or manual patient lookups
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       4. INTERACTIVE WORKFLOW PREVIEW / SCENARIO TOGGLE
+       ===================================================================== -->
+  <section id="workflow" class="py-20 lg:py-28 bg-sterileMist border-y border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+        <div class="max-w-2xl">
+          <p class="font-mono text-xs font-semibold uppercase tracking-widest text-clinicalCyan mb-3">
+            Interactive Clinical Preview
+          </p>
+          <h2 class="font-heading text-3xl sm:text-4xl font-bold text-slateBrand tracking-tight">
+            Adaptive Intelligence Across Subspecialties
+          </h2>
+          <p class="mt-3 text-base sm:text-lg text-slate-600">
+            Toggle between clinical scenarios to see how EngiMedix dynamically shifts its EHR data extraction and institutional protocol calibration based on the clinical task.
+          </p>
+        </div>
+
+        <!-- Interactive Scenario Switcher Pills -->
+        <div class="inline-flex p-1.5 rounded-2xl bg-white border border-slate-200 shadow-xs self-start lg:self-auto" role="tablist">
+          <button id="tab-neuro" type="button" role="tab" aria-selected="true" class="scenario-tab px-4 sm:px-5 py-2.5 rounded-xl text-sm font-semibold transition-smooth bg-slateBrand text-white shadow-xs">
+            Neuroradiology: Oncology Staging
+          </button>
+          <button id="tab-body" type="button" role="tab" aria-selected="false" class="scenario-tab px-4 sm:px-5 py-2.5 rounded-xl text-sm font-semibold transition-smooth text-slate-600 hover:text-slateBrand">
+            Body Imaging: Renal &amp; IV Contrast
+          </button>
+        </div>
+      </div>
+
+      <!-- Dynamic Scenario Display Card -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-soft overflow-hidden">
+        
+        <!-- Top Status Strip -->
+        <div class="px-6 py-4 bg-slateBrand text-white flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <span id="sc-badge" class="px-2.5 py-1 rounded-md bg-clinicalCyan text-white font-mono text-xs font-semibold">
+              NEURORADIOLOGY
+            </span>
+            <h3 id="sc-title" class="font-heading text-lg font-bold">
+              MRI Brain W/WO Contrast — Newly Diagnosed Lung Cancer
+            </h3>
+          </div>
+          <span id="sc-guideline" class="font-mono text-xs text-emerald-300">
+            Calibrated to Institutional Neuro-Oncology Standard
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-200">
+          
+          <!-- Left Side: Comparison of Generic EHR vs EngiMedix Task-Conditioned Synthesis -->
+          <div class="lg:col-span-6 p-6 sm:p-8 space-y-6">
+            <div>
+              <span class="font-mono text-xs font-semibold uppercase tracking-wider text-slate-400">
+                What Standard EHR Summaries Show
+              </span>
+              <div class="mt-2.5 p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-sm text-slate-500">
+                <p id="sc-generic">
+                  “64yo M with PMH of HTN, hyperlipidemia, GERD, former smoker, recent lung biopsy. Active meds: lisinopril, atorvastatin, omeprazole, dexamethasone, albuterol...”
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-2.5">
+                <span class="font-mono text-xs font-semibold uppercase tracking-wider text-clinicalCyan">
+                  EngiMedix Task-Conditioned Brief
+                </span>
+                <span class="font-mono text-[11px] text-pulseEmerald font-semibold">
+                  High-Signal Extraction
+                </span>
+              </div>
+              <div id="sc-extracted" class="space-y-3">
+                <!-- Populated dynamically via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Side: Site-Calibrated Protocol Recommendations -->
+          <div class="lg:col-span-6 p-6 sm:p-8 bg-slate-50/40 flex flex-col justify-between space-y-6">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-xs font-semibold uppercase tracking-wider text-slateBrand">
+                  Calibrated Protocol Recommendations
+                </span>
+                <span class="font-mono text-xs text-slate-500">Top-3 Ranked</span>
+              </div>
+
+              <div id="sc-options" class="space-y-3">
+                <!-- Populated dynamically via JS -->
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-white border border-slate-200 flex items-start gap-3">
+              <svg class="w-5 h-5 text-clinicalCyan shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p id="sc-rationale" class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <strong class="text-slateBrand">Institutional Calibration Note:</strong> Reflects local neuro-oncology preference for volumetric 3D post-contrast T1 sequences in patients receiving corticosteroid therapy.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       5. CLINICAL IMPACT & VALUE STRIP
+       ===================================================================== -->
+  <section id="impact" class="py-20 lg:py-24 bg-slateBrand text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl mb-14">
+        <p class="font-mono text-xs font-semibold uppercase tracking-widest text-pulseEmerald mb-3">
+          Clinical &amp; Operational Impact
+        </p>
+        <h2 class="font-heading text-3xl sm:text-4xl font-bold tracking-tight">
+          Designed to Reclaim Physician Time and Mitigate Reading-Room Burnout
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Metric 1 -->
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-6 space-y-3">
+          <div class="font-mono text-3xl sm:text-4xl font-bold text-pulseEmerald">
+            1.3 hrs/day
+          </div>
+          <h3 class="font-heading text-lg font-bold text-white">
+            Non-Interpretive Burden
+          </h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Directly targets the manual protocoling and fragmented EHR chart-hunting hours lost per radiologist every shift.
+          </p>
+        </div>
+
+        <!-- Metric 2 -->
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-6 space-y-3">
+          <div class="font-mono text-3xl sm:text-4xl font-bold text-sky-400">
+            &lt; 200 ms
+          </div>
+          <h3 class="font-heading text-lg font-bold text-white">
+            Single-Pass Inference
+          </h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Compact decision architectures run on standard hospital infrastructure without heavy GPU overhead or cloud latency.
+          </p>
+        </div>
+
+        <!-- Metric 3 -->
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-6 space-y-3">
+          <div class="font-mono text-3xl sm:text-4xl font-bold text-pulseEmerald">
+            Zero PHI
+          </div>
+          <h3 class="font-heading text-lg font-bold text-white">
+            Privacy-Safe Adaptation
+          </h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Site-specific protocol calibration is engineered so patient identifiers are never memorized or stored inside model weights.
+          </p>
+        </div>
+
+        <!-- Metric 4 -->
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-6 space-y-3">
+          <div class="font-mono text-3xl sm:text-4xl font-bold text-sky-400">
+            Multi-Specialty
+          </div>
+          <h3 class="font-heading text-lg font-bold text-white">
+            Radiology &amp; Pathology
+          </h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Purpose-built for diagnostic specialties underserved by generic EHR modules—starting in Radiology and expanding to Anatomic Pathology.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       6. ENTERPRISE TRUST & LEADERSHIP
+       ===================================================================== -->
+  <section id="trust" class="py-20 lg:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+      
+      <!-- 4-Pillar Enterprise Trust Bar -->
+      <div>
+        <div class="max-w-3xl mb-12">
+          <p class="font-mono text-xs font-semibold uppercase tracking-widest text-clinicalCyan mb-3">
+            Enterprise Architecture &amp; Governance
+          </p>
+          <h2 class="font-heading text-3xl sm:text-4xl font-bold text-slateBrand tracking-tight">
+            Built for Health System Security and Clinical Autonomy
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <div class="p-6 rounded-2xl bg-sterileMist/60 border border-slate-200/80 space-y-3">
+            <div class="w-10 h-10 rounded-lg bg-slateBrand text-white flex items-center justify-center font-mono text-sm font-bold">
+              01
+            </div>
+            <h3 class="font-heading text-lg font-bold text-slateBrand">
+              On-Premises &amp; Private Cloud
+            </h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Deploys inside your health system firewall or private VPC with full BAA alignment and zero external data egress required.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-sterileMist/60 border border-slate-200/80 space-y-3">
+            <div class="w-10 h-10 rounded-lg bg-clinicalCyan text-white flex items-center justify-center font-mono text-sm font-bold">
+              02
+            </div>
+            <h3 class="font-heading text-lg font-bold text-slateBrand">
+              Transparent Evidence Attribution
+            </h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Every ranked protocol option surfaces the exact clinical facts, lab values, and policy triggers behind the recommendation for rapid independent verification.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-sterileMist/60 border border-slate-200/80 space-y-3">
+            <div class="w-10 h-10 rounded-lg bg-pulseEmerald text-white flex items-center justify-center font-mono text-sm font-bold">
+              03
+            </div>
+            <h3 class="font-heading text-lg font-bold text-slateBrand">
+              Institutional Protocol Alignment
+            </h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Grounded in national appropriateness guidelines and tailored to reflect your department’s approved clinical exceptions and scanner capabilities.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-sterileMist/60 border border-slate-200/80 space-y-3">
+            <div class="w-10 h-10 rounded-lg bg-slateBrand text-white flex items-center justify-center font-mono text-sm font-bold">
+              04
+            </div>
+            <h3 class="font-heading text-lg font-bold text-slateBrand">
+              Passive Pilot Telemetry
+            </h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Validates turnaround time and protocol concordance in shadow mode using existing RIS/PACS audit timestamps—zero disruption to daily clinical volume.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Leadership & Domain Credibility Banner -->
+      <div id="leadership" class="rounded-2xl bg-gradient-to-r from-sterileMist via-white to-sky-50/70 border border-slate-200 p-8 sm:p-10 lg:p-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-8 space-y-4">
+            <span class="font-mono text-xs font-semibold uppercase tracking-widest text-clinicalCyan">
+              Clinician-Led Engineering
+            </span>
+            <h3 class="font-heading text-2xl sm:text-3xl font-bold text-slateBrand">
+              Founded by a Practicing Radiologist &amp; Medical Device Veterans
+            </h3>
+            <p class="text-slate-600 text-base leading-relaxed">
+              EngiMedix was created from inside the reading room to solve the real operational bottlenecks that slow down diagnostic physicians. Our leadership combines frontline clinical radiology experience, enterprise health-IT integration expertise, and seasoned medical device commercialization governance.
+            </p>
+          </div>
+          <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end">
+            <a href="#contact" data-role-select="Radiology Department Chair / Clinical Leader" class="role-cta inline-flex items-center justify-center px-5 py-3 rounded-xl text-sm font-semibold text-white bg-clinicalCyan hover:bg-sky-700 transition-smooth">
+              Explore Academic Design Partnership
+            </a>
+            <a href="#contact" data-role-select="Investor / Strategic Partner" class="role-cta inline-flex items-center justify-center px-5 py-3 rounded-xl text-sm font-semibold text-slateBrand bg-white border border-slate-300 hover:border-slateBrand transition-smooth">
+              Request Investor Brief
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       7. CONTACT & INQUIRY SECTION
+       ===================================================================== -->
+  <section id="contact" class="py-20 lg:py-28 bg-sterileMist border-t border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Left Column: Direct Contact Info -->
+        <div class="lg:col-span-5 space-y-6">
+          <p class="font-mono text-xs font-semibold uppercase tracking-widest text-clinicalCyan">
+            Start a Conversation
+          </p>
+          <h2 class="font-heading text-3xl sm:text-4xl font-bold text-slateBrand tracking-tight">
+            Partner With EngiMedix
+          </h2>
+          <p class="text-slate-600 text-base leading-relaxed">
+            Whether you chair a radiology department looking to reduce protocoling bottlenecks and reading-room burnout, or represent a healthcare investment syndicate, we welcome a direct conversation.
+          </p>
+
+          <div class="space-y-4 pt-2">
+            <div class="p-4 rounded-xl bg-white border border-slate-200 flex items-center justify-between gap-3">
+              <div>
+                <p class="font-mono text-[11px] uppercase tracking-wider text-slate-400">Direct Inquiries</p>
+                <a href="mailto:info@engimedix.com" class="font-mono text-sm font-semibold text-slateBrand hover:text-clinicalCyan transition-colors">
+                  info@engimedix.com
+                </a>
+              </div>
+              <button id="copy-email-btn" type="button" class="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-sterileMist text-slateBrand hover:bg-slate-200 transition-colors">
+                Copy Email
+              </button>
+            </div>
+
+            <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-1">
+              <p class="font-mono text-[11px] uppercase tracking-wider text-slate-400">Primary Focus Areas</p>
+              <p class="text-sm font-medium text-slateBrand">
+                Academic &amp; Specialty Radiology • Diagnostic Decision Intelligence • Anatomic Pathology
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Inquiry Form -->
+        <div class="lg:col-span-7">
+          <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 lg:p-10 shadow-soft">
+            
+            <form id="inquiry-form" class="space-y-5">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label for="full-name" class="block text-sm font-semibold text-slateBrand mb-1.5">
+                    Full Name <span class="text-clinicalCyan">*</span>
+                  </label>
+                  <input id="full-name" name="fullName" type="text" required placeholder="Dr. Jane Smith" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm text-graphiteInk focus:outline-none focus:border-clinicalCyan focus:ring-2 focus:ring-clinicalCyan/20" />
+                </div>
+                <div>
+                  <label for="work-email" class="block text-sm font-semibold text-slateBrand mb-1.5">
+                    Work or Institutional Email <span class="text-clinicalCyan">*</span>
+                  </label>
+                  <input id="work-email" name="workEmail" type="email" required placeholder="jsmith@academicmed.org" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm text-graphiteInk focus:outline-none focus:border-clinicalCyan focus:ring-2 focus:ring-clinicalCyan/20" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label for="organization" class="block text-sm font-semibold text-slateBrand mb-1.5">
+                    Health System / Organization <span class="text-clinicalCyan">*</span>
+                  </label>
+                  <input id="organization" name="organization" type="text" required placeholder="University Medical Center" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm text-graphiteInk focus:outline-none focus:border-clinicalCyan focus:ring-2 focus:ring-clinicalCyan/20" />
+                </div>
+                <div>
+                  <label for="role-select" class="block text-sm font-semibold text-slateBrand mb-1.5">
+                    Your Role <span class="text-clinicalCyan">*</span>
+                  </label>
+                  <select id="role-select" name="role" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm text-graphiteInk bg-white focus:outline-none focus:border-clinicalCyan focus:ring-2 focus:ring-clinicalCyan/20">
+                    <option value="Radiology Department Chair / Clinical Leader">Radiology Department Chair / Clinical Leader</option>
+                    <option value="Hospital IT / Clinical Informatics">Hospital IT / Clinical Informatics</option>
+                    <option value="Investor / Strategic Partner">Investor / Strategic Partner</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label for="message" class="block text-sm font-semibold text-slateBrand mb-1.5">
+                  How can we help?
+                </label>
+                <textarea id="message" name="message" rows="4" placeholder="Tell us about your department's protocoling or clinical workflow priorities, or share details on your investment focus..." class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm text-graphiteInk focus:outline-none focus:border-clinicalCyan focus:ring-2 focus:ring-clinicalCyan/20"></textarea>
+              </div>
+
+              <div class="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <p class="text-xs text-slate-500">
+                  Do not submit Protected Health Information (PHI) through this form.
+                </p>
+                <button type="submit" class="inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-sm font-semibold text-white bg-slateBrand hover:bg-slate-800 shadow-sm transition-smooth shrink-0">
+                  Send Inquiry
+                </button>
+              </div>
+            </form>
+
+            <!-- Instant Visual Confirmation Box (Hidden until submit) -->
+            <div id="form-confirmation" class="hidden py-8 text-center space-y-4">
+              <div class="w-14 h-14 rounded-full bg-emerald-100 text-pulseEmerald flex items-center justify-center mx-auto">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 class="font-heading text-2xl font-bold text-slateBrand">
+                Inquiry Prepared for EngiMedix
+              </h3>
+              <p id="confirmation-text" class="text-sm sm:text-base text-slate-600 max-w-md mx-auto leading-relaxed">
+                Thank you. Your inquiry details have been recorded. You can also launch your default mail client directly to <span class="font-mono text-slateBrand font-semibold">info@engimedix.com</span> below.
+              </p>
+              <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
+                <a id="mailto-fallback-link" href="mailto:info@engimedix.com" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-clinicalCyan hover:bg-sky-700 transition-smooth">
+                  Open in Email Client
+                </a>
+                <button id="reset-form-btn" type="button" class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold text-slateBrand bg-sterileMist hover:bg-slate-200 transition-smooth">
+                  Submit Another Inquiry
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       8. MINIMALIST FOOTER
+       ===================================================================== -->
+  <footer class="bg-white border-t border-slate-200 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      
+      <!-- Brand Mark + Copyright -->
+      <div class="flex items-center gap-3">
+        <svg class="w-8 h-6 shrink-0" viewBox="0 0 112 84" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M8 14L28 4L48 16L39 27L28 20L19 25L35 42L19 59L28 64L39 57L48 68L28 80L8 70V54L22 42L8 30V14Z" fill="#132238"/>
+          <path d="M56 14L69 4L81 26L93 4L106 14V70L93 80V34L81 55L69 34V80L56 70V14Z" fill="#0284C7"/>
+          <path d="M51 33L60 42L51 51L42 42L51 33Z" fill="#10B981"/>
+        </svg>
+        <span class="font-heading text-lg font-extrabold tracking-tight">
+          <span class="text-slateBrand">Engi</span><span class="text-clinicalCyan">Medix</span>
+        </span>
+        <span class="text-slate-300">|</span>
+        <span class="text-xs text-slate-500">
+          &copy; 2026 EngiMedix, Inc. All rights reserved.
+        </span>
+      </div>
+
+      <!-- Footer Navigation & Tag -->
+      <div class="flex flex-wrap items-center gap-6 text-xs font-medium text-slate-500">
+        <a href="#solutions" class="hover:text-slateBrand transition-colors">Solutions</a>
+        <a href="#workflow" class="hover:text-slateBrand transition-colors">Clinical Workflow</a>
+        <a href="#trust" class="hover:text-slateBrand transition-colors">Enterprise Trust</a>
+        <a href="mailto:info@engimedix.com" class="font-mono text-slateBrand hover:text-clinicalCyan transition-colors">info@engimedix.com</a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       INTERACTIVE JAVASCRIPT (Mobile Menu, Scenario Switcher, Inquiry Form)
+       ===================================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Mobile Menu Toggle
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+      }
+
+      // 2. Interactive Workflow Scenario Data & Switcher
+      const scenarios = {
+        neuro: {
+          badge: 'NEURORADIOLOGY',
+          title: 'MRI Brain W/WO Contrast — Newly Diagnosed Lung Cancer',
+          guideline: 'Calibrated to Institutional Neuro-Oncology Standard',
+          generic: '“64yo M with PMH of HTN, hyperlipidemia, GERD, former smoker, recent lung biopsy. Active meds: lisinopril, atorvastatin, omeprazole, dexamethasone, albuterol...”',
+          extracted: [
+            {
+              label: 'Primary Malignancy & Staging',
+              text: 'Stage IIIB non-small cell lung cancer (NSCLC), biopsy-proven 11 days ago; initial CNS staging requested.',
+              alert: false
+            },
+            {
+              label: 'Extracranial Metastases',
+              text: 'PET-CT demonstrates mediastinal nodal and left adrenal metastases; no prior brain or spine MRI on file.',
+              alert: false
+            },
+            {
+              label: 'Steroid Therapy Modifier',
+              text: 'Dexamethasone 4 mg BID initiated 48 hours ago for peritumoral edema — may reduce blood-brain barrier contrast enhancement.',
+              alert: true
+            }
+          ],
+          options: [
+            {
+              rank: 1,
+              name: 'MRI Brain Tumor/Mets Protocol (Thin-Slice 3D T1+C)',
+              prob: 89,
+              primary: true
+            },
+            {
+              rank: 2,
+              name: 'MRI Brain + Cervical/Thoracic Spine W/WO Contrast',
+              prob: 8,
+              primary: false
+            },
+            {
+              rank: 3,
+              name: 'Standard Routine MRI Brain W/WO Contrast',
+              prob: 3,
+              primary: false
+            }
+          ],
+          rationale: 'Reflects institutional neuro-oncology protocol preference for isotropic 3D post-contrast T1 acquisition when active corticosteroid therapy is detected.'
+        },
+        body: {
+          badge: 'BODY IMAGING',
+          title: 'CT Abdomen & Pelvis — Renal Mass Evaluation & Reduced eGFR',
+          guideline: 'Calibrated to Institutional Contrast & Nephrology Policy',
+          generic: '“71yo F with T2DM, CKD Stage 3b, prior cholecystectomy, right renal lesion seen on outside ultrasound. Labs: Cr 1.72, Hgb 11.8, A1c 7.1%...”',
+          extracted: [
+            {
+              label: 'Diagnostic Indication',
+              text: 'Indeterminate 2.8 cm right interpolar solid/cystic renal lesion on outside renal ultrasound; characterize for RCC.',
+              alert: false
+            },
+            {
+              label: 'Renal Function & Hydration Status',
+              text: 'Stable eGFR 34 mL/min/1.73m² (Cr 1.72 mg/dL, unchanged over 90 days); no acute kidney injury.',
+              alert: true
+            },
+            {
+              label: 'Contrast Allergy & Medication Check',
+              text: 'No prior iodinated contrast reaction; patient is not taking metformin or nephrotoxic NSAIDs.',
+              alert: false
+            }
+          ],
+          options: [
+            {
+              rank: 1,
+              name: 'CT Renal Mass Multiphasic Protocol (Low-Osmolar IV Contrast)',
+              prob: 84,
+              primary: true
+            },
+            {
+              rank: 2,
+              name: 'MRI Abdomen W/WO Contrast (Macrocyclic GBCA)',
+              prob: 12,
+              primary: false
+            },
+            {
+              rank: 3,
+              name: 'CT Abdomen/Pelvis Without IV Contrast',
+              prob: 4,
+              primary: false
+            }
+          ],
+          rationale: 'Calibrated to institutional renal contrast policy permitting IV iodinated contrast at stable eGFR ≥ 30 mL/min when diagnostic characterization of a solid renal mass is required.'
+        }
+      };
+
+      const renderScenario = (key) => {
+        const data = scenarios[key];
+        if (!data) return;
+
+        document.getElementById('sc-badge').textContent = data.badge;
+        document.getElementById('sc-title').textContent = data.title;
+        document.getElementById('sc-guideline').textContent = data.guideline;
+        document.getElementById('sc-generic').textContent = data.generic;
+        document.getElementById('sc-rationale').innerHTML = `<strong class="text-slateBrand">Institutional Calibration Note:</strong> ${data.rationale}`;
+
+        // Render Extracted Facts
+        const extractedContainer = document.getElementById('sc-extracted');
+        extractedContainer.innerHTML = data.extracted.map(item => `
+          <div class="p-3.5 rounded-xl border ${item.alert ? 'bg-amber-50/70 border-amber-200' : 'bg-sky-50/60 border-sky-200/80'}">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="w-2 h-2 rounded-full ${item.alert ? 'bg-amber-500' : 'bg-clinicalCyan'}"></span>
+              <span class="font-mono text-xs font-semibold ${item.alert ? 'text-amber-900' : 'text-slateBrand'}">${item.label}</span>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">${item.text}</p>
+          </div>
+        `).join('');
+
+        // Render Top-3 Protocol Options
+        const optionsContainer = document.getElementById('sc-options');
+        optionsContainer.innerHTML = data.options.map(opt => `
+          <div class="p-3.5 rounded-xl border ${opt.primary ? 'border-2 border-pulseEmerald/60 bg-emerald-50/40' : 'border-slate-200 bg-white'} space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full ${opt.primary ? 'bg-pulseEmerald text-white' : 'bg-slate-200 text-slateBrand'} font-mono text-xs font-bold">
+                  ${opt.rank}
+                </span>
+                <span class="${opt.primary ? 'font-semibold text-slateBrand' : 'font-medium text-slate-700'} text-sm">
+                  ${opt.name}
+                </span>
+              </div>
+              <span class="font-mono text-sm font-bold ${opt.primary ? 'text-pulseEmerald' : 'text-slate-600'}">
+                ${opt.prob}%
+              </span>
+            </div>
+            <div class="w-full bg-slate-200/70 h-1.5 rounded-full overflow-hidden">
+              <div class="${opt.primary ? 'bg-pulseEmerald' : 'bg-clinicalCyan'} h-full rounded-full" style="width: ${opt.prob}%"></div>
+            </div>
+          </div>
+        `).join('');
+      };
+
+      // Initialize default scenario
+      renderScenario('neuro');
+
+      const tabNeuro = document.getElementById('tab-neuro');
+      const tabBody = document.getElementById('tab-body');
+
+      const setActiveTab = (activeBtn, inactiveBtn, scenarioKey) => {
+        activeBtn.classList.add('bg-slateBrand', 'text-white', 'shadow-xs');
+        activeBtn.classList.remove('text-slate-600', 'hover:text-slateBrand');
+        activeBtn.setAttribute('aria-selected', 'true');
+
+        inactiveBtn.classList.remove('bg-slateBrand', 'text-white', 'shadow-xs');
+        inactiveBtn.classList.add('text-slate-600', 'hover:text-slateBrand');
+        inactiveBtn.setAttribute('aria-selected', 'false');
+
+        renderScenario(scenarioKey);
+      };
+
+      tabNeuro.addEventListener('click', () => setActiveTab(tabNeuro, tabBody, 'neuro'));
+      tabBody.addEventListener('click', () => setActiveTab(tabBody, tabNeuro, 'body'));
+
+      // 3. Pre-select Role in Form from CTA Buttons
+      const roleSelect = document.getElementById('role-select');
+      document.querySelectorAll('.role-cta').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetRole = btn.getAttribute('data-role-select');
+          if (targetRole && roleSelect) {
+            roleSelect.value = targetRole;
+          }
+        });
+      });
+
+      // 4. Copy Direct Email Button (iFrame-safe fallback)
+      const copyEmailBtn = document.getElementById('copy-email-btn');
+      if (copyEmailBtn) {
+        copyEmailBtn.addEventListener('click', () => {
+          const tempInput = document.createElement('input');
+          tempInput.value = 'info@engimedix.com';
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          document.execCommand('copy');
+          document.body.removeChild(tempInput);
+
+          const originalText = copyEmailBtn.textContent;
+          copyEmailBtn.textContent = 'Copied!';
+          copyEmailBtn.classList.add('bg-emerald-100', 'text-pulseEmerald');
+          setTimeout(() => {
+            copyEmailBtn.textContent = originalText;
+            copyEmailBtn.classList.remove('bg-emerald-100', 'text-pulseEmerald');
+          }, 2000);
+        });
+      }
+
+      // 5. Inquiry Form Submission & Visual Confirmation State
+      const inquiryForm = document.getElementById('inquiry-form');
+      const formConfirmation = document.getElementById('form-confirmation');
+      const confirmationText = document.getElementById('confirmation-text');
+      const mailtoFallbackLink = document.getElementById('mailto-fallback-link');
+      const resetFormBtn = document.getElementById('reset-form-btn');
+
+      if (inquiryForm && formConfirmation) {
+        inquiryForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          const name = document.getElementById('full-name').value.trim();
+          const email = document.getElementById('work-email').value.trim();
+          const org = document.getElementById('organization').value.trim();
+          const role = document.getElementById('role-select').value;
+          const msg = document.getElementById('message').value.trim();
+
+          const subject = encodeURIComponent(`EngiMedix Inquiry (${role}) — ${org}`);
+          const body = encodeURIComponent(
+            `Name: ${name}\nEmail: ${email}\nOrganization: ${org}\nRole: ${role}\n\nMessage:\n${msg || 'Interested in learning more about EngiMedix.'}`
+          );
+
+          mailtoFallbackLink.href = `mailto:info@engimedix.com?subject=${subject}&body=${body}`;
+          confirmationText.innerHTML = `Thank you, <strong class="text-slateBrand">${name}</strong>. Your inquiry for <strong class="text-slateBrand">${org}</strong> (${role}) is ready. Click below to send directly via your email client to <span class="font-mono text-slateBrand font-semibold">info@engimedix.com</span>.`;
+
+          inquiryForm.classList.add('hidden');
+          formConfirmation.classList.remove('hidden');
+        });
+
+        resetFormBtn.addEventListener('click', () => {
+          inquiryForm.reset();
+          formConfirmation.classList.add('hidden');
+          inquiryForm.classList.remove('hidden');
+        });
+      }
+    });
+  </script>
+</body>
+</html>
